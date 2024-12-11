@@ -68,4 +68,5 @@ streamlit
 PyPDF2
 optimum
 auto-gptq
+fastembed
 ```
