@@ -66,4 +66,6 @@ langchain-core
 langchain-chroma
 streamlit
 PyPDF2
+optimum
+auto-gptq
 ```
