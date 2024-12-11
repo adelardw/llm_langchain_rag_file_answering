@@ -1,0 +1,13 @@
+torch
+transformers
+peft
+deepspeed
+langchain
+langchain-huggingface
+langchain-community 
+langchain-core
+langchain-chroma
+streamlit
+PyPDF2
+optimum
+auto-gptq
