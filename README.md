@@ -27,7 +27,7 @@ import vectorizer
 
 
 file_path='text_text.txt'
-model_name = 'meta-llama/Meta-Llama-3.1-8B-Instruct'
+model_name = ' <hf model name>  '
 
 
 rag = vectorizer.RAGPipeline()
