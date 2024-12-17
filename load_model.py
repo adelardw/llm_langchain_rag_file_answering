@@ -56,9 +56,9 @@ class LangChainChatModelLoader(ModelLMLoader):
                          pipe_loader=True)
 
 
-        template = "Ты помощник техподдержки IAS. Отвечай строго по контексту." \
-                    "Контекст: {context}, Запрос: {question} ." \
-                    "Ответь на Запрос используя только Контекст. Ответь одним предложением сохранив смысл. "
+        template = "Ты ассистент IAS. Отвечай по контексту." \
+                    "Контекст: {context}, Вопрос: {question} ." \
+                    "Ответь на Вопрос используя только Контекст. Ответь одним предложением сохранив смысл. "
     
         
         llm = HuggingFacePipeline(pipeline=self.pipe, batch_size=1)
@@ -95,14 +95,14 @@ class HFChatModelLoader(ModelLMLoader):
                          use_deepspeed = use_deepspeed,
                          pipe_loader=False)
         
-        self.system_prompt = 'Ты помощник техподдержки IAS. Отвечай строго по контексту.'
+        self.system_prompt = 'Ты ассистент IAS. Отвечай строго по контексту.'
         
     def __call__(self, query, context):
         
         messages = [
         {"role": "system", "content": f"{self.system_prompt} Контекст: {context}"},
-        {"role": "user", "content": f"Запрос: {query}"},
-        {"role": "system", "content": "Ответь на Запрос используя только Контекст. Ответь одним предложением сохранив смысл"}]
+        {"role": "user", "content": f"Вопрос: {query}"},
+        {"role": "system", "content": "Ответь на Вопрос используя только Контекст. Ответь одним предложением сохранив смысл"}]
     
         text = self.tokenizer.apply_chat_template(
             messages,
