@@ -6,10 +6,10 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_core.documents.base import Document
 import os
 import torch
+from abc import ABC
 
 
-
-class RAGCreator:
+class RAGCreator(ABC):
     
     @staticmethod
     def splitter_documents(file_path_or_text, chunk_size=250,
