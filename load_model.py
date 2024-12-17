@@ -14,15 +14,16 @@ class ModelLMLoader:
     def __init__(self, model_name, sampling_parameters = dict(max_new_tokens=300,
                                                                 truncation=True,
                                                                 do_sample=False),
-                                        
+
                                         use_deepspeed = False,
                                         peft_loader = False,
                                         pipe_loader = True,
+                                        **loader_kwargs
                                         ):
         if peft_loader:
-            model = AutoPeftModelForCausalLM.from_pretrained(model_name)
+            model = AutoPeftModelForCausalLM.from_pretrained(model_name, **loader_kwargs)
         else:
-            model = AutoModelForCausalLM.from_pretrained(model_name)
+            model = AutoModelForCausalLM.from_pretrained(model_name, **loader_kwargs)
             
         model.eval()
         model = torch.compile(model).to(device)
@@ -97,11 +98,11 @@ class HFChatModelLoader(ModelLMLoader):
         
         self.system_prompt = 'Ты ассистент IAS. Отвечай строго по контексту.'
         
-    def __call__(self, query, context):
+    def __call__(self, question, context):
         
         messages = [
         {"role": "system", "content": f"{self.system_prompt} Контекст: {context}"},
-        {"role": "user", "content": f"Вопрос: {query}"},
+        {"role": "user", "content": f"Вопрос: {question}"},
         {"role": "system", "content": "Ответь на Вопрос используя только Контекст. Ответь одним предложением сохранив смысл"}]
     
         text = self.tokenizer.apply_chat_template(
